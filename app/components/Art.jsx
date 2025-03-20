@@ -1,25 +1,38 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
-// Dummy data untuk fitur utama
+// Data Fitur Landing Page
 const fiturLandingPage = [
   { id: 1, title: "Desain Modern", description: "Tampilan profesional & menarik", image: "/images/web1.jpg" },
   { id: 2, title: "Optimasi Konversi", description: "Dirancang untuk meningkatkan penjualan", image: "/images/web2.jpg" },
   { id: 3, title: "Identitas Merek", description: "Cerminkan karakter unik bisnis Anda", image: "/images/web3.jpg" },
   { id: 4, title: "Performa Tinggi", description: "Muat cepat & responsif di semua perangkat", image: "/images/web4.jpg" },
-  { id: 5, title: "Pengalaman Interaktif", description: "Meningkatkan keterlibatan pengunjung", image: "/images/web5.jpg" }
+  { id: 5, title: "Pengalaman Interaktif", description: "Meningkatkan keterlibatan pengunjung", image: "/images/web5.jpg" },
+  { id: 6, title: "SEO Friendly", description: "Optimasi agar mudah ditemukan di Google", image: "/images/web6.jpg" },
+  { id: 7, title: "Integrasi Mudah", description: "Mendukung berbagai layanan & API", image: "/images/web7.jpg" }
 ];
 
 export default function LandingPage() {
   const { ref: heroRef, inView: heroInView } = useInView({ triggerOnce: true });
   const { ref: aboutRef, inView: aboutInView } = useInView({ triggerOnce: true });
 
+  const [startIndex, setStartIndex] = useState(0);
+  const itemsPerPage = 3;
+  
+  const nextSlide = () => {
+    setStartIndex((prevIndex) => (prevIndex + itemsPerPage < fiturLandingPage.length ? prevIndex + itemsPerPage : 0));
+  };
+
+  const prevSlide = () => {
+    setStartIndex((prevIndex) => (prevIndex - itemsPerPage >= 0 ? prevIndex - itemsPerPage : fiturLandingPage.length - itemsPerPage));
+  };
+
   return (
     <main className="bg-white text-gray-900">
-
       {/* Hero Section */}
       <section ref={heroRef} className="text-center pt-22 pb-12 px-6 md:px-12">
         <motion.h2 
@@ -47,25 +60,33 @@ export default function LandingPage() {
         <h3 className="text-2xl font-bold text-indigo-900 mb-2">Kenapa Harus Menggunakan Landing Page Kami?</h3>
         <p className="text-gray-600">Dirancang untuk meningkatkan interaksi dan hasil maksimal.</p>
 
-        <div className="flex gap-4 overflow-x-auto hide-scrollbar py-8 px-0">
-          {fiturLandingPage.map((item) => (
-            <div key={item.id} className="w-48">
+        {/* Grid fitur dengan Pagination */}
+        <div className="flex justify-center gap-6 py-8">
+          {fiturLandingPage.slice(startIndex, startIndex + itemsPerPage).map((item) => (
+            <motion.div 
+              key={item.id} 
+              className="w-72"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <img 
                 src={item.image} 
-                className="w-full h-72 rounded-lg shadow-lg object-cover transition-transform hover:scale-105" 
+                className="w-full h-100 rounded-lg shadow-lg object-cover transition-transform hover:scale-105" 
                 alt={item.title} 
               />
-              <p className="mt-4 mb-2 text-sm font-semibold">{item.title}</p>
-              <p className="text-xs text-gray-500 line-clamp-3">{item.description}</p>
-            </div>
+              <h4 className="mt-4 mb-1 text-lg font-semibold text-gray-900">{item.title}</h4>
+              <p className="text-sm text-gray-600">{item.description}</p>
+            </motion.div>
           ))}
         </div>
 
+        {/* Tombol Navigasi Pagination */}
         <div className="flex justify-center mt-6 gap-4">
-          <button className="bg-gray-200 p-3 rounded-full hover:bg-gray-300">
+          <button onClick={prevSlide} className="bg-gray-200 p-3 rounded-full hover:bg-gray-300 transition">
             <FaArrowLeft />
           </button>
-          <button className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600">
+          <button onClick={nextSlide} className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 transition">
             <FaArrowRight />
           </button>
         </div>
@@ -87,7 +108,6 @@ export default function LandingPage() {
           Bergabunglah dengan kami dan raih kesuksesan lebih cepat!
         </p>
       </section>
-      
     </main>
   );
 }

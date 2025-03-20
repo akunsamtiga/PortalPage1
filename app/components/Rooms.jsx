@@ -3,27 +3,90 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { FastAverageColor } from "fast-average-color";
 
 const rooms = [
-  { title: "Webinar LandingPage", price: "75/night", previewLink: "https://webinar1-five.vercel.app/?mode=desktop" },
-  { title: "Product LandingPage", price: "120/night", previewLink: "https://landing-page1-five-eta.vercel.app/?mode=desktop" },
-  { title: "Sales LandingPage", price: "95/night", previewLink: "https://salespage1.vercel.app/?mode=desktop" },
-  { title: "Click-through LandingPage", price: "150/night", previewLink: "https://clickthrough1.vercel.app/?mode=desktop" },
-  { title: "Lead-generation LandingPage", price: "250/night", previewLink: "https://leadgeneration1.vercel.app/?mode=desktop" },
-  { title: "Portal LandingPage", price: "210/night", previewLink: "https://portal-page1.vercel.app/?mode=desktop" }
+  { 
+    title: "Webinar Page", 
+    previewLink: "https://webinar1-five.vercel.app/", 
+    thumbnail: "/images/w1.jpg"
+  },
+  { 
+    title: "Product Page", 
+    previewLink: "https://landing-page1-five-eta.vercel.app/", 
+    thumbnail: "/images/w2.jpg"
+  },
+  { 
+    title: "Sales Page", 
+    previewLink: "https://salespage1.vercel.app/", 
+    thumbnail: "/images/w3.jpg"
+  },
+  { 
+    title: "Click-through Page", 
+    previewLink: "https://clickthrough1.vercel.app/", 
+    thumbnail: "/images/w4.jpg"
+  },
+  { 
+    title: "Lead-generation Page", 
+    previewLink: "https://leadgeneration1.vercel.app/", 
+    thumbnail: "/images/w5.jpg"
+  },
+  { 
+    title: "Portal Page", 
+    previewLink: "https://portal-page1.vercel.app/", 
+    thumbnail: "/images/w6.jpg"
+  }
 ];
 
 export default function Rooms() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [colors, setColors] = useState({});
 
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => setIsClient(true), []);
+  useEffect(() => {
+    const fac = new FastAverageColor();
+    const loadColors = async () => {
+      const newColors = {};
+
+      await Promise.all(
+        rooms.map(async (room, index) => {
+          try {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.src = room.thumbnail;
+            
+            await new Promise((resolve, reject) => {
+              img.onload = () => resolve();
+              img.onerror = () => reject();
+            });
+
+            const color = fac.getColor(img);
+            newColors[index] = color.hex;
+          } catch (error) {
+            console.error("Error extracting color for:", room.title, error);
+            newColors[index] = "#333"; // Default warna jika gagal
+          }
+        })
+      );
+
+      setColors(newColors);
+    };
+
+    loadColors();
+  }, []);
 
   return (
-    <section ref={ref} id="rooms" className="bg-gradient-to-t from-gray-900 to-black py-20 text-white">
-      <div className="max-w-6xl mx-auto text-center">
+    <section ref={ref} id="rooms" className="bg-gradient-to-t from-gray-900 to-black py-20 text-white relative">
+
+      {/* Bulatan Terminal (seperti di IDE) */}
+      <div className="absolute top-5 left-5 flex space-x-2">
+        <span className="w-3 h-3 bg-red-500 rounded-full shadow-md"></span>
+        <span className="w-3 h-3 bg-yellow-500 rounded-full shadow-md"></span>
+        <span className="w-3 h-3 bg-green-500 rounded-full shadow-md"></span>
+      </div>
+
+      <div className="max-w-6xl mx-auto text-center relative">
         <motion.h2 
-          className="text-4xl md:text-6xl font-extrabold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-gray-400 to-gray-900 py-2 px-8"
+          className="text-4xl md:text-6xl font-extrabold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-yellow-100 to-yellow-800 py-2 px-8"
           initial={{ opacity: 0, y: -30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -31,7 +94,7 @@ export default function Rooms() {
           Sanstore Landing Page
         </motion.h2>
         <motion.p 
-          className="mt-1 text-lg text-gray-300 px-6"
+          className="mt-1 text-lg text-yellow-100 px-6"
           initial={{ opacity: 0, y: -20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
@@ -40,50 +103,43 @@ export default function Rooms() {
         </motion.p>
       </div>
 
-      <div className="mt-16 grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+      <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-6 auto-rows-auto">
         {rooms.map((room, index) => (
-          <motion.div 
-            key={index}
-            className="relative group rounded-xl overflow-hidden shadow-xl border border-gray-700 hover:border-yellow-400 transition-all duration-300"
-            initial={{ opacity: 0, y: 50 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }}
+          <div key={index} className="group rounded-xl overflow-hidden shadow-xl border transition-all duration-300"
+          style={{ borderColor: colors[index] || "#222" }} // Warna dari gambar
           >
-            {/* Title di atas */}
-            <div className="absolute top-3 left-3 bg-black/60 px-4 py-2 rounded-md text-white text-lg font-semibold backdrop-blur-sm shadow-lg">
-              {room.title}
+            
+            {/* Gambar Screenshot */}
+            <div className="relative cursor-pointer aspect-video" onClick={() => window.open(room.previewLink, "_blank")}>
+              <img 
+                src={room.thumbnail} 
+                alt={`Preview of ${room.title}`} 
+                className="w-full h-auto object-cover rounded-t-xl transition-all duration-300 hover:brightness-90"
+              />
             </div>
 
-            {/* Render iframe hanya di client */}
-            <div className="relative">
-              {isClient ? (
-                <iframe 
-                  src={room.previewLink} 
-                  className="w-full h-72 border-none rounded-t-xl transition-all duration-500 group-hover:scale-105"
-                ></iframe>
-              ) : (
-                <div className="w-full h-72 flex items-center justify-center bg-gray-700 text-gray-300">
-                  Loading preview...
-                </div>
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
-            </div>
+            {/* Konten di bawah gambar (Judul & Tombol) */}
+            <motion.div 
+              className="flex justify-between items-center p-4 rounded-b-xl"
+              style={{ backgroundColor: colors[index] || "#222" }} // Warna dari gambar
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }}
+            >
+              {/* Judul */}
+              <h3 className="text-lg text-white truncate bg-yellow-700/50 py-1 px-3 rounded-lg">{room.title}</h3>
 
-            {/* Konten */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 text-white flex justify-between items-center backdrop-blur-md bg-black/50">
-              {/* Harga / Keterangan */}
-              <h3 className="text-lg text-gray-300 line-clamp-1">{room.title}</h3>
-
-              {/* Tombol "Lihat Detail" */}
+              {/* Tombol DEMO */}
               <motion.button 
-                className="bg-yellow-400 text-black px-4 py-2 rounded-md text-sm font-semibold shadow-lg border-2 border-transparent transition-all duration-300 hover:border-yellow-300 hover:bg-yellow-500 hover:scale-105"
+                className="px-4 py-2 rounded-md text-white text-sm font-semibold shadow-lg border-2 bg-red-900/40 border-transparent transition-all duration-300 hover:scale-105"
                 whileHover={{ scale: 1.1 }}
                 onClick={() => window.open(room.previewLink, "_blank")}
               >
                 DEMO
               </motion.button>
-            </div>
-          </motion.div>
+            </motion.div>
+
+          </div>
         ))}
       </div>
     </section>
