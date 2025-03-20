@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## **README.md - Landing Page Sales Page**  
 
-## Getting Started
+# 🚀 **Sales Page - Landing Page untuk Meningkatkan Penjualan**  
 
-First, run the development server:
+Sales Page ini dirancang untuk membantu bisnis Anda **meningkatkan konversi dan penjualan** dengan tampilan profesional, cepat, dan responsif. Landing page ini cocok untuk **menjual produk digital, jasa, atau produk fisik** dengan strategi pemasaran yang efektif.
 
+---
+
+## **📌 Fitur Utama**
+✅ **Desain Menarik & Modern** - Tampilan profesional yang meningkatkan kredibilitas bisnis.  
+✅ **Optimasi Konversi** - CTA yang kuat dan elemen psikologi pemasaran yang efektif.  
+✅ **Responsif di Semua Perangkat** - Kompatibel dengan desktop, tablet, dan smartphone.  
+✅ **Kecepatan Maksimal** - Optimasi performa untuk loading yang cepat.  
+✅ **SEO Friendly** - Struktur HTML yang mendukung peringkat di mesin pencari.  
+✅ **Integrasi Formulir & CTA** - Formulir kontak atau pemesanan yang mudah digunakan.  
+
+---
+
+## **🛠️ Teknologi yang Digunakan**
+- **Next.js** (App Router) - Framework React untuk performa tinggi  
+- **Tailwind CSS** - Framework CSS untuk desain responsif & modern  
+- **Framer Motion** - Animasi interaktif & pengalaman pengguna yang lebih menarik  
+- **React Icons** - Ikon profesional untuk meningkatkan estetika  
+- **React Intersection Observer** - Animasi hanya aktif saat elemen masuk ke layar  
+
+---
+
+## **🚀 Cara Menjalankan Proyek**
+### **1️⃣ Clone Repository**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/username/sales-page.git
+cd sales-page
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **2️⃣ Instal Dependensi**
+```bash
+npm install
+# atau
+yarn install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### **3️⃣ Jalankan di Mode Development**
+```bash
+npm run dev
+# atau
+yarn dev
+```
+Kemudian buka **http://localhost:3000** di browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## **📂 Struktur Folder**
+```
+/sales-page
+│── /public/images        # Folder untuk gambar
+│── /components           # Komponen yang digunakan dalam halaman
+│── /app                  # Struktur routing Next.js (App Router)
+│── page.tsx              # Halaman utama
+│── tailwind.config.js     # Konfigurasi Tailwind CSS
+│── next.config.js         # Konfigurasi Next.js
+│── README.md             # Dokumentasi proyek
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## **🎯 Penggunaan**
+Sales Page ini bisa digunakan untuk berbagai jenis bisnis, seperti:
+- **Penjualan Produk Digital** (E-book, kursus, software)  
+- **Jasa Profesional** (Konsultasi, coaching, layanan desain)  
+- **Produk Fisik** (Fashion, gadget, makanan, dan lainnya)  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## **📢 Kontribusi**
+Jika ingin berkontribusi dalam pengembangan proyek ini, silakan fork repository ini dan buat pull request dengan perubahan yang ingin ditambahkan.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## **📞 Kontak & Dukungan**
+Jika ada pertanyaan atau ingin mengembangkan landing page lebih lanjut, silakan hubungi:  
+📩 **Email**: your@email.com  
+🌐 **Website**: [yourwebsite.com](https://yourwebsite.com)  
+
+---
+
+🚀 **Tingkatkan penjualan dengan Sales Page yang efektif & profesional!**
