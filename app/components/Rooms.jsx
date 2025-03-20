@@ -10,7 +10,7 @@ const rooms = [
   { title: "Sales LandingPage", price: "95/night", previewLink: "https://salespage1.vercel.app/?mode=desktop" },
   { title: "Click-through LandingPage", price: "150/night", previewLink: "https://clickthrough1.vercel.app/?mode=desktop" },
   { title: "Lead-generation LandingPage", price: "250/night", previewLink: "https://leadgeneration1.vercel.app/?mode=desktop" },
-  { title: "Portal LandingPage", price: "210/night", previewLink: "https://portalpage1.vercel.app/?mode=desktop" }
+  { title: "Portal LandingPage", price: "210/night", previewLink: "https://portal-page1.vercel.app/?mode=desktop" }
 ];
 
 export default function Rooms() {
