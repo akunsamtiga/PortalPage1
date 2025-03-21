@@ -32,16 +32,6 @@ export default function Hero() {
     }
   };
 
-  // Fungsi untuk smooth scroll ke section berikutnya (default: section setelah hero)
-  const scrollToNextSection = () => {
-    const nextSection = document.getElementById("next-section");
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      console.warn("Elemen dengan ID 'next-section' tidak ditemukan.");
-    }
-  };
-
   return (
     <section 
       ref={ref} 
@@ -50,7 +40,7 @@ export default function Hero() {
       {/* Background Image */}
       <motion.div 
         className="absolute inset-0 bg-cover bg-center" 
-        style={{ backgroundImage: "url('/images/hotel1.jpg')" }}
+        style={{ backgroundImage: "url('/images/bg1.jpg')" }}
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
         transition={{ duration: 3, ease: "easeOut" }}
@@ -96,7 +86,7 @@ export default function Hero() {
       {/* Badge Sanstore */}
       <motion.button
         onClick={() => router.push("/")} // Navigasi ke halaman Home
-        className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-5 py-2 text-lg font-bold rounded-full shadow-lg uppercase tracking-wide transition-all duration-300 hover:bg-yellow-500 hover:scale-110 active:scale-95"
+        className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-4 py-1 md:px-5 md:py-2 lg:px-6 lg:py-2 text-lg md:text-xl lg:text-2xl font-bold rounded-full shadow-lg uppercase tracking-wide transition-all duration-300 hover:bg-yellow-500 hover:scale-110 active:scale-95"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
@@ -107,13 +97,13 @@ export default function Hero() {
 
       {/* Hero Content */}
       <motion.div 
-        className="relative text-center max-w-2xl px-6"
+        className="relative text-center"
         initial={{ opacity: 0, scale: 0.9, y: 50 }}
         animate={controls}
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <motion.p 
-          className="text-lg uppercase tracking-wide text-gold"
+          className="text-base md:text-lg lg:text-xl uppercase tracking-wide text-gold"
           initial={{ opacity: 0, y: -20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.3 }}
@@ -122,7 +112,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.h1 
-          className="text-4xl md:text-6xl font-extrabold tracking-wide leading-tight drop-shadow-lg"
+          className="text-2xl md:text-4xl lg:text-6xl font-extrabold tracking-wide leading-tight drop-shadow-lg mx-auto max-w-full md:max-w-2xl lg:max-w-4xl"
           initial={{ opacity: 0, y: -20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.5 }}
@@ -131,7 +121,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p 
-          className="mt-3 text-lg text-gray-300 drop-shadow-md"
+          className="mt-3 text-base md:text-lg lg:text-xl text-gray-300 drop-shadow-md mx-auto px-8 md:px-14"
           initial={{ opacity: 0, y: -10 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.7 }}
@@ -142,7 +132,7 @@ export default function Hero() {
         {/* CTA Lihat Preview dengan Smooth Scroll */}
         <motion.button 
           onClick={scrollToRooms}
-          className="mt-6 inline-block bg-gray-900 text-gray-100 px-4 py-2 text-lg rounded-md shadow-lg transition-transform duration-300 hover:bg-[#ffffff20] hover:scale-110 hover:text-white hover:duration-500 hover:shadow-2xl"
+          className="mt-6 inline-block font-bold bg-gray-900 text-gray-100 px-4 py-2 text-lg md:text-xl lg:text-2xl rounded-md shadow-lg transition-transform duration-300 hover:bg-[#ffffff20] hover:scale-110 hover:text-white hover:duration-500 hover:shadow-2xl"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 1 }}
@@ -155,7 +145,7 @@ export default function Hero() {
       {/* Scroll Down Icon */}
       <motion.div 
         className="absolute bottom-15 left-1/2 transform -translate-x-1/2 cursor-pointer text-gray-300"
-        onClick={scrollToNextSection}
+        onClick={scrollToRooms}
         animate={{ y: [0, 10, 0] }} // Animasi naik-turun
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
       >
