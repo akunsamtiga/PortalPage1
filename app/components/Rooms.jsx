@@ -36,6 +36,16 @@ const rooms = [
     title: "Portal Page", 
     previewLink: "https://portal-page1.vercel.app/", 
     thumbnail: "/images/w6.jpg"
+  },
+  { 
+    title: "Webinar Page 2", 
+    previewLink: "https://webinar2.vercel.app/", 
+    thumbnail: "/images/w7.png"
+  },
+  { 
+    title: "Company Profile", 
+    previewLink: "https://company-profile1.vercel.app/", 
+    thumbnail: "/images/w8.png"
   }
 ];
 
