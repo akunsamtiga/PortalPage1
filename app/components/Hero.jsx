@@ -1,156 +1,66 @@
 "use client";
 
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 export default function Hero() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
-  const controls = useAnimation();
-  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
 
+  // Hanya render blur shapes di sisi klien
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    if (inView) {
-      controls.start({ opacity: 1, scale: 1, y: 0 });
-    }
-  }, [inView, controls]);
-
-  // Fungsi untuk smooth scroll ke section "rooms"
+  // Scroll ke section rooms
   const scrollToRooms = () => {
     const roomsSection = document.getElementById("rooms");
     if (roomsSection) {
-      roomsSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      console.warn("Elemen dengan ID 'rooms' tidak ditemukan.");
+      roomsSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <section 
-      ref={ref} 
-      className="relative h-screen flex items-center justify-center text-white overflow-hidden"
-    >
-      {/* Background Image */}
-      <motion.div 
-        className="absolute inset-0 bg-cover bg-center" 
-        style={{ backgroundImage: "url('/images/bg1.jpg')" }}
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 3, ease: "easeOut" }}
+    <section className="relative h-screen flex items-center justify-center text-white overflow-hidden md:max-w-5xl xl:max-w-7xl mx-auto">
+      {/* Background Image dengan Overlay */}
+      <div className="absolute inset-[-10] bg-cover bg-center blur-sm" style={{ backgroundImage: "url('/images/bg1.jpg')" }}>
+        <div className="absolute inset-0 bg-gradient-to-t from-white to-black/50"></div>
+      </div>
+
+      {/* Tombol Navigasi Home */}
+      <button
+        onClick={() => router.push("/")}
+        className="absolute top-4 left-1/2 -translate-x-1/2 bg-yellow-50 text-black px-4 py-1.5 md:px-5 md:py-2 text-sm md:text-lg font-thin rounded-full shadow-lg uppercase tracking-wide hover:bg-yellow-500 active:scale-95 transition-all duration-300 z-10"
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-      </motion.div>
+        Sanzystore.com
+      </button>
 
-      {/* Blur Shapes (Hanya di Client) */}
-      {isClient && (
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(7)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full blur-3xl opacity-70"
-              style={{
-                width: `${100 + Math.random() * 20}px`,
-                height: `${100 + Math.random() * 20}px`,
-                background: [
-                  "rgba(255, 215, 0, 0.7)",  // Gold
-                  "rgba(75, 0, 130, 0.7)",   // Indigo
-                  "rgba(30, 144, 255, 0.7)", // Dodger Blue
-                  "rgba(255, 69, 0, 0.7)",   // Red-Orange
-                ][Math.floor(Math.random() * 4)],
-                top: `${Math.random() * 80}%`,
-                left: `${Math.random() * 80}%`,
-              }}
-              animate={{
-                scale: [1, 1.3, 1],
-                rotate: [0, 360],
-                x: [0, Math.random() * 50 - 25, 0],
-                y: [0, Math.random() * 50 - 25, 0],
-              }}
-              transition={{
-                duration: 2.5 + Math.random() * 1.5, 
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Badge Sanstore */}
-      <motion.button
-        onClick={() => router.push("/")} // Navigasi ke halaman Home
-        className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-4 py-1 md:px-5 md:py-2 lg:px-6 lg:py-2 text-lg md:text-xl lg:text-2xl font-bold rounded-full shadow-lg uppercase tracking-wide transition-all duration-300 hover:bg-yellow-500 hover:scale-110 active:scale-95"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      >
-        Sanstore.com
-      </motion.button>
-
-
-      {/* Hero Content */}
-      <motion.div 
-        className="relative text-center"
-        initial={{ opacity: 0, scale: 0.9, y: 50 }}
-        animate={controls}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <motion.p 
-          className="text-base md:text-lg lg:text-xl uppercase tracking-wide text-gold"
-          initial={{ opacity: 0, y: -20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.3 }}
-        >
-          Performance & SEO
-        </motion.p>
-
-        <motion.h1 
-          className="text-2xl md:text-4xl lg:text-6xl font-extrabold tracking-wide leading-tight drop-shadow-lg mx-auto max-w-full md:max-w-2xl lg:max-w-4xl"
-          initial={{ opacity: 0, y: -20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          SOLUSI LANDING PAGE PREMIUM UNTUK BISNIS
-        </motion.h1>
-
-        <motion.p 
-          className="mt-3 text-base md:text-lg lg:text-xl text-gray-300 drop-shadow-md mx-auto px-8 md:px-14"
-          initial={{ opacity: 0, y: -10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.7 }}
-        >
+      {/* Konten Utama Hero */}
+      <div className="relative text-center px-4 max-w-4xl mx-auto z-10">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-red-200 via-yellow-200 to-orange-400 pb-2">
+          Solusi Cepat Bangun Website Premium Untuk Bisnis
+        </h1>
+        <p className="mt-3 text-white text-sm sm:text-base md:text-lg max-w-xl mx-auto">
           Desain Eksklusif & Responsif di semua perangkat.
-        </motion.p>
+        </p>
 
-        {/* CTA Lihat Preview dengan Smooth Scroll */}
-        <motion.button 
+        {/* Tombol CTA */}
+        <button
           onClick={scrollToRooms}
-          className="mt-6 inline-block font-bold bg-gray-900 text-gray-100 px-4 py-2 text-lg md:text-xl lg:text-2xl rounded-md shadow-lg transition-transform duration-300 hover:bg-[#ffffff20] hover:scale-110 hover:text-white hover:duration-500 hover:shadow-2xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 1 }}
-          whileHover={{ scale: 1.1 }}
+          className="mt-6 inline-block bg-yellow-50 text-black px-5 py-2.5 text-sm md:text-base lg:text-lg font-bold rounded-md shadow-lg hover:bg-white hover:text-black transition-colors duration-300 z-10"
         >
           Lihat Preview
-        </motion.button>
-      </motion.div>
+        </button>
+      </div>
 
-      {/* Scroll Down Icon */}
-      <motion.div 
-        className="absolute bottom-15 left-1/2 transform -translate-x-1/2 cursor-pointer text-gray-300"
+      {/* Icon Scroll Down */}
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer text-gray-800 animate-bounce"
         onClick={scrollToRooms}
-        animate={{ y: [0, 10, 0] }} // Animasi naik-turun
-        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
       >
-        <ChevronDownIcon className="w-10 h-10 text-gray-300 hover:text-white transition-colors duration-300" />
-      </motion.div>
+        <ChevronDownIcon className="w-8 h-8 sm:w-10 sm:h-10 text-gray-600 hover:text-yellow-400 transition-colors duration-300" />
+      </div>
     </section>
   );
 }

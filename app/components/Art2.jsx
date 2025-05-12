@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function Art2() {
   return (
-    <main className="relative bg-white max-w-screen text-gray-900 py-20 px-6 md:px-12 overflow-hidden">
+    <main className="relative bg-white md:max-w-5xl xl:max-w-7xl mx-auto text-gray-900 py-20 px-6 md:px-12 overflow-hidden">
       {/* Hero Section */}
       <section className="relative flex flex-col items-center text-center">
         <div className="relative w-full max-w-5xl bg-gray-900 text-white px-4 py-16 rounded-[30px]">
@@ -58,8 +58,7 @@ export default function Art2() {
               <em>Desain Profesional</em> untuk Performa Maksimal
             </h2>
             <p className="mt-4 text-gray-600 text-lg">
-              Optimalkan strategi pemasaran Anda dengan landing page yang
-              dirancang untuk meningkatkan konversi dan engagement.
+              Optimalkan strategi pemasaran Anda dengan landing page yang dirancang untuk meningkatkan konversi dan engagement.
             </p>
           </div>
 
@@ -69,10 +68,8 @@ export default function Art2() {
               <em>SEO</em> & Terintegrasi Analytics
             </h2>
             <p className="mt-4 text-gray-600 text-lg text-left md:text-right">
-              Nikmati kemudahan menganilisis lalu lintas data pengunjung
-              anda di semua perangkat.
+              Nikmati kemudahan menganalisis lalu lintas data pengunjung Anda di semua perangkat.
             </p>
-
           </div>
           <motion.div
             className="relative rounded-[30px] overflow-hidden shadow-lg order-1 md:order-2"
