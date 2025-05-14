@@ -1,149 +1,283 @@
 "use client";
 
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// Data rooms
-const rooms = [
-  { title: "Webinar Page", previewLink: "https://webinar1-five.vercel.app/ ", thumbnail: "/images/w1.jpg" },
-  { title: "Product Page", previewLink: "https://landing-page1-five-eta.vercel.app/ ", thumbnail: "/images/w2.jpg" },
-  { title: "Sales Page", previewLink: "https://salespage1.vercel.app/ ", thumbnail: "/images/w3.jpg" },
-  { title: "Click-through Page", previewLink: "https://clickthrough1.vercel.app/ ", thumbnail: "/images/w4.jpg" },
-  { title: "Lead-generation Page", previewLink: "https://leadgeneration1.vercel.app/ ", thumbnail: "/images/w5.jpg" },
-  { title: "Portal Page", previewLink: "https://portal-page1.vercel.app/ ", thumbnail: "/images/w6.jpg" },
-  { title: "Webinar Page 2", previewLink: "https://webinar2.vercel.app/ ", thumbnail: "/images/w7.png" },
-  { title: "Company Profile", previewLink: "https://company-profile1.vercel.app/ ", thumbnail: "/images/w8.png" },
+const projects = [
+  { 
+    title: "Website Webinar", 
+    thumbnail: "/images/w1.webp",
+    link: "#",
+    category: "Aplikasi Web",
+    description: "Platform webinar interaktif dengan fitur tanya jawab real-time dan analitik peserta",
+    year: "2023"
+  },
+  { 
+    title: "Halaman Produk", 
+    thumbnail: "/images/w2.webp",
+    link: "#",
+    category: "E-Commerce",
+    description: "Desain produk e-commerce yang meningkatkan konversi penjualan dengan viewer produk 3D",
+    year: "2023"
+  },
+  { 
+    title: "Landing Page Penjualan", 
+    thumbnail: "/images/w3.webp",
+    link: "#",
+    category: "Marketing",
+    description: "Halaman penjualan berkinerja tinggi dengan testimoni video dan CTA yang efektif",
+    year: "2023"
+  },
+  { 
+    title: "Halaman Click-through", 
+    thumbnail: "/images/w4.webp",
+    link: "#",
+    category: "Marketing",
+    description: "Desain minimalis yang fokus pada konversi dengan navigasi sederhana",
+    year: "2022"
+  },
+  { 
+    title: "Halaman Lead Generation", 
+    thumbnail: "/images/w5.webp",
+    link: "#",
+    category: "Marketing",
+    description: "Formulir pengumpulan lead dengan multi-step untuk meningkatkan kualitas prospek",
+    year: "2022"
+  },
+  { 
+    title: "Portal Pelanggan", 
+    thumbnail: "/images/w6.webp",
+    link: "#",
+    category: "Aplikasi Web",
+    description: "Dashboard pelanggan dengan rekomendasi personalisasi dan manajemen akun",
+    year: "2022"
+  },
+  { 
+    title: "Website Perusahaan", 
+    thumbnail: "/images/w7.webp",
+    link: "#",
+    category: "Company Profile",
+    description: "Website perusahaan modern dengan showcase tim interaktif dan portfolio",
+    year: "2021"
+  },
+  { 
+    title: "Aplikasi Reservasi", 
+    thumbnail: "/images/w8.webp",
+    link: "#",
+    category: "Aplikasi Web",
+    description: "Sistem reservasi online dengan integrasi kalender dan notifikasi",
+    year: "2021"
+  },
+  { 
+    title: "Marketplace UMKM", 
+    thumbnail: "/images/w9.webp",
+    link: "#",
+    category: "E-Commerce",
+    description: "Platform marketplace lokal untuk produk-produk UMKM dengan pembayaran digital",
+    year: "2021"
+  },
+  { 
+    title: "Blog Edukasi", 
+    thumbnail: "/images/w10.webp",
+    link: "#",
+    category: "Content",
+    description: "Website blog dengan sistem manajemen konten dan tata letak yang optimal",
+    year: "2020"
+  },
+  { 
+    title: "Aplikasi Donasi", 
+    thumbnail: "/images/w11.webp",
+    link: "#",
+    category: "Aplikasi Web",
+    description: "Platform penggalangan dana dengan integrasi pembayaran aman",
+    year: "2020"
+  },
+  { 
+    title: "Website Sekolah", 
+    thumbnail: "/images/w12.webp",
+    link: "#",
+    category: "Institusi",
+    description: "Website informasi sekolah dengan fitur pendaftaran online dan portal siswa",
+    year: "2020"
+  }
 ];
 
-// Variasi animasi untuk tiap card
 const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
-export default function Rooms() {
-  const controlsArray = rooms.map(() => useAnimation());
+export default function Portfolio() {
+  const [visibleItems, setVisibleItems] = useState(6);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("Semua");
+  const sectionRef = useRef(null);
 
-  const handleScroll = (controls) => {
-    const elements = document.querySelectorAll(".room-card");
-    elements.forEach((el, index) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && !hasAnimated) {
-        controls[index].start("visible");
-      }
-    });
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
+  const loadMore = () => {
+    setVisibleItems(prev => Math.min(prev + 6, filteredProjects.length));
   };
 
-  // Trigger awal saat komponen dimount
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      handleScroll(controlsArray);
-      setHasAnimated(true);
-    }, 100);
+  // Get all unique categories
+  const allCategories = ["Semua", ...new Set(projects.map(project => project.category))];
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Tambahkan event scroll untuk trigger satu kali
-  useEffect(() => {
-    if (hasAnimated) return;
-
-    const onScroll = () => {
-      handleScroll(controlsArray);
-      window.removeEventListener("scroll", onScroll);
-      setHasAnimated(true);
-    };
-
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [controlsArray, hasAnimated]);
+  // Filter projects based on active filter
+  const filteredProjects = activeFilter === "Semua" 
+    ? projects 
+    : projects.filter(project => project.category === activeFilter);
 
   return (
-    <section className="bg-white text-white py-20 px-4 sm:px-6 lg:px-8 md:max-w-5xl xl:max-w-7xl mx-auto">
-      {/* Terminal Indicator */}
-      <div className="relative bottom-5 left-5 flex space-x-2 z-10">
-        <span className="w-3 h-3 bg-red-500 rounded-full shadow-md"></span>
-        <span className="w-3 h-3 bg-yellow-500 rounded-full shadow-md"></span>
-        <span className="w-3 h-3 bg-green-500 rounded-full shadow-md"></span>
-      </div>
-
-      {/* Section Title */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-left md:max-w-5xl xl:max-w-7xl mx-auto mb-16"
+    <section
+      ref={sectionRef}
+      className="bg-white py-12 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl"
+      aria-label="Portofolio karya kami"
+    >
+      {/* Header Section */}
+      <motion.header
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12"
       >
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-red-400 via-yellow-400 to-orange-800 pb-2">
-          All Creative Works, Selected Projects.
-        </h2>
-        <p className="mt-4 text-yellow-500">I choose selected projects to show based on idea, visual, and execution.</p>
-      </motion.div>
+        <span className="inline-block px-3 py-1 text-sm font-medium bg-blue-50 text-blue-600 rounded-full mb-4">
+          Karya Terpilih
+        </span>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+          Hasil Karya <br className="hidden sm:block" /> 
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">
+            Terbaik
+          </span>
+          {" "}Kami 
+        </h1>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Koleksi solusi digital berkualitas tinggi yang telah membantu berbagai bisnis berkembang
+        </p>
+      </motion.header>
 
-      {/* Grid Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-        {rooms.map((room, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants}
-            initial="hidden"
-            animate={controlsArray[index]}
-            ref={(el) => {
-              const element = el;
-              if (element && !hasAnimated) {
-                const observer = new IntersectionObserver(
-                  (entries) => {
-                    if (entries[0].isIntersecting && !hasAnimated) {
-                      controlsArray[index].start("visible");
-                      setHasAnimated(true);
-                      observer.disconnect();
-                    }
-                  },
-                  { rootMargin: "0px 0px -100px 0px" }
-                );
-                observer.observe(element);
-              }
+      {/* Category Filters - Now Functional */}
+      <div className="flex flex-wrap justify-center gap-2 mb-8">
+        {allCategories.map((category) => (
+          <button
+            key={category}
+            onClick={() => {
+              setActiveFilter(category);
+              setVisibleItems(6); // Reset visible items when filter changes
             }}
-            className="room-card group relative aspect-video overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-300 cursor-pointer"
+            className={`px-4 py-2 text-sm rounded-full border transition-colors ${
+              activeFilter === category
+                ? "bg-blue-600 text-white border-blue-600"
+                : "border-gray-400 hover:bg-gray-50 text-gray-500"
+            }`}
+            aria-label={`Filter by ${category}`}
           >
-            {/* Thumbnail Image */}
-            <Image
-              src={room.thumbnail}
-              alt={room.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-
-            {/* Overlay Gradient untuk tombol */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-
-            {/* Tombol Explore di dalam gambar */}
-            <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-10">
-              <Link
-                href={room.previewLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-white text-black text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm hover:bg-emerald-500 hover:text-white transform hover:scale-105 transition-all duration-300"
-              >
-                Explore
-                <svg
-                  className="w-5 h-5 rotate-45 group-hover:rotate-90 transition-transform duration-300"
-                  viewBox="0 0 16 19"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </Link>
-            </div>
-          </motion.div>
+            {category}
+          </button>
         ))}
       </div>
+
+      {/* Projects Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredProjects.slice(0, visibleItems).map((project, index) => (
+          <motion.article
+            key={`${project.title}-${index}`}
+            initial="hidden"
+            animate={hasAnimated ? "visible" : "hidden"}
+            variants={itemVariants}
+            transition={{ delay: index * 0.05 }}
+            className="group relative overflow-hidden rounded-xl border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-lg"
+            aria-labelledby={`project-${index}-title`}
+          >
+            <a 
+              href={project.link} 
+              className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              aria-label={`Lihat proyek ${project.title}`}
+            >
+              <div className="relative aspect-[16/9] bg-gray-50">
+                <Image
+                  src={project.thumbnail}
+                  alt={`Tampilan proyek ${project.title}`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority={index < 3}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              </div>
+
+              <div className="p-5 bg-white">
+                <div className="flex justify-between items-start mb-2">
+                  <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-50 text-blue-600 rounded">
+                    {project.category}
+                  </span>
+                  <span className="text-xs text-gray-500">{project.year}</span>
+                </div>
+                
+                <h2 
+                  id={`project-${index}-title`}
+                  className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors"
+                >
+                  {project.title}
+                </h2>
+                
+                <p className="text-gray-600 text-sm line-clamp-2 mb-4">
+                  {project.description}
+                </p>
+                
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center text-blue-600 text-sm font-medium group-hover:underline">
+                    Lihat detail
+                    <svg className="ml-1.5 w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          </motion.article>
+        ))}
+      </div>
+
+      {/* Load More Button - Only shows if there are more items to show */}
+      {visibleItems < filteredProjects.length && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mt-12 text-center"
+        >
+          <button 
+            onClick={loadMore}
+            className="px-6 py-3 bg-white border border-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors inline-flex items-center gap-2"
+            aria-label="Muat lebih banyak proyek"
+          >
+            Tampilkan Lebih Banyak
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </motion.div>
+      )}
+
+      {/* Empty State when no projects match filter */}
+      {filteredProjects.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-gray-500">Tidak ada proyek yang ditemukan untuk kategori ini</p>
+        </div>
+      )}
     </section>
   );
 }
