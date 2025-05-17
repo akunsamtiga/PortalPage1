@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "My Awesome App",
-  description: "A basic Next.js app layout",
+  title: "Sanzy Store",
+  description: "marketplace modern untuk template website premium dan siap pakai. Temukan desain berkualitas tinggi yang cocok untuk bisnis, portofolio, toko online, dan banyak lagi—semua bisa langsung digunakan dan di-custom sesuai kebutuhan Anda.",
 };
 
 export default function RootLayout({ children }) {

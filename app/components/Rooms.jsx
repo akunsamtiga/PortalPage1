@@ -6,82 +6,106 @@ import { useEffect, useRef, useState } from "react";
 
 const projects = [
   { 
-    title: "Website Webinar", 
-    thumbnail: "/images/w1.webp",
-    link: "#",
-    category: "Aplikasi Web",
-    description: "Platform webinar interaktif dengan fitur tanya jawab real-time dan analitik peserta",
-    year: "2023"
+    title: "Tasty Corner", 
+    thumbnail: "/images/l1.jpg",
+    link: "https://leadgeneration1.vercel.app/",
+    category: "Landing Page",
+    description: "Nikmati setiap gigitan penuh rasa dan kenikmatan.",
+    year: "2025"
   },
   { 
-    title: "Halaman Produk", 
-    thumbnail: "/images/w2.webp",
-    link: "#",
-    category: "E-Commerce",
-    description: "Desain produk e-commerce yang meningkatkan konversi penjualan dengan viewer produk 3D",
-    year: "2023"
+    title: "Rasa Nusantara", 
+    thumbnail: "/images/l2.jpg",
+    link: "https://lead-generation2.vercel.app/",
+    category: "Landing Page",
+    description: "Menghadirkan kelezatan kuliner tradisional Indonesia dengan sentuhan modern.",
+    year: "2025"
+  },
+    { 
+    title: "CitraRasa Digital", 
+    thumbnail: "/images/l3.jpg",
+    link: "https://lead-generation3.vercel.app/",
+    category: "Landing Page",
+    description: "Transformasikan bisnis kuliner Anda dengan solusi digital inovatif untuk meningkatkan daya tarik dan penjualan secara online.",
+    year: "2025"
   },
   { 
-    title: "Landing Page Penjualan", 
-    thumbnail: "/images/w3.webp",
-    link: "#",
-    category: "Marketing",
-    description: "Halaman penjualan berkinerja tinggi dengan testimoni video dan CTA yang efektif",
-    year: "2023"
+    title: "LuxeElectro", 
+    thumbnail: "/images/s1.jpg",
+    link: "https://salespage1.vercel.app/",
+    category: "Landing Page",
+    description: "Bawa kemewahan ke dalam kehidupan sehari-hari dengan pilihan elektronik terbaik.",
+    year: "2025"
+  },
+    { 
+    title: "Modewear", 
+    thumbnail: "/images/s2.jpg",
+    link: "https://sales-page2.vercel.app/",
+    category: "Landing Page",
+    description: "Desain futuristik dengan pattern celestial dan cutting avant-garde.",
+    year: "2025"
   },
   { 
-    title: "Halaman Click-through", 
-    thumbnail: "/images/w4.webp",
-    link: "#",
-    category: "Marketing",
-    description: "Desain minimalis yang fokus pada konversi dengan navigasi sederhana",
-    year: "2022"
+    title: "Woodora", 
+    thumbnail: "/images/s3.jpg",
+    link: "https://sales-page3.vercel.app/",
+    category: "Landing Page",
+    description: "Kursi elegan bergaya minimalis dengan material kayu jati solid. Nyaman, tahan lama, dan cocok untuk segala gaya interior.",
+    year: "2025"
+  },
+    { 
+    title: "Zychrome", 
+    thumbnail: "/images/w1.jpg",
+    link: "https://webinar1-five.vercel.app/",
+    category: "Landing Page",
+    description: "Optimalkan kekuasaan skill kamu melalui webinar interaktif dan inspiratif dari para ahli terbaik.",
+    year: "2025"
   },
   { 
-    title: "Halaman Lead Generation", 
-    thumbnail: "/images/w5.webp",
-    link: "#",
-    category: "Marketing",
-    description: "Formulir pengumpulan lead dengan multi-step untuk meningkatkan kualitas prospek",
-    year: "2022"
+    title: "Lumicast", 
+    thumbnail: "/images/w2.jpg",
+    link: "https://webinar2.vercel.app/",
+    category: "Landing Page",
+    description: "Menerangi pikiran, memperluas wawasan—webinar eksklusif untuk masa depanmu.",
+    year: "2025"
+  },
+    { 
+    title: "NextTalks", 
+    thumbnail: "/images/w3.jpg",
+    link: "https://webinar3.vercel.app/",
+    category: "Landing Page",
+    description: "Temukan ide-ide besar dan pembicara inspiratif dalam satu platform webinar profesional.",
+    year: "2025"
   },
   { 
-    title: "Portal Pelanggan", 
-    thumbnail: "/images/w6.webp",
-    link: "#",
-    category: "Aplikasi Web",
-    description: "Dashboard pelanggan dengan rekomendasi personalisasi dan manajemen akun",
-    year: "2022"
+    title: "Elevinar", 
+    thumbnail: "/images/w4.jpg",
+    link: "https://webinar4.vercel.app/",
+    category: "Landing Page",
+    description: "Tingkatkan wawasanmu melalui webinar interaktif dan inspiratif dari para ahli terbaik.",
+    year: "2025"
+  },
+    { 
+    title: "Skywings", 
+    thumbnail: "/images/p1.jpg",
+    link: "https://landing-page1-five-eta.vercel.app/",
+    category: "Landing Page",
+    description: "Solusi penerbangan modern yang menghubungkan Anda dengan pengalaman terbang yang cepat, aman, dan nyaman.",
+    year: "2025"
   },
   { 
-    title: "Website Perusahaan", 
-    thumbnail: "/images/w7.webp",
-    link: "#",
-    category: "Company Profile",
-    description: "Website perusahaan modern dengan showcase tim interaktif dan portfolio",
-    year: "2021"
-  },
-  { 
-    title: "Aplikasi Reservasi", 
-    thumbnail: "/images/w8.webp",
-    link: "#",
-    category: "Aplikasi Web",
-    description: "Sistem reservasi online dengan integrasi kalender dan notifikasi",
-    year: "2021"
-  },
-  { 
-    title: "Marketplace UMKM", 
-    thumbnail: "/images/w9.webp",
-    link: "#",
-    category: "E-Commerce",
-    description: "Platform marketplace lokal untuk produk-produk UMKM dengan pembayaran digital",
-    year: "2021"
+    title: "Bribu", 
+    thumbnail: "/images/p2.jpg",
+    link: "https://productpage2.vercel.app/",
+    category: "Landing Page",
+    description: "Temukan desainer berbakat dan dapatkan desain profesional melalui kontes desain di Bribu.",
+    year: "2025"
   },
   { 
     title: "Blog Edukasi", 
     thumbnail: "/images/w10.webp",
     link: "#",
-    category: "Content",
+    category: "E-Commerce",
     description: "Website blog dengan sistem manajemen konten dan tata letak yang optimal",
     year: "2020"
   },
@@ -89,7 +113,7 @@ const projects = [
     title: "Aplikasi Donasi", 
     thumbnail: "/images/w11.webp",
     link: "#",
-    category: "Aplikasi Web",
+    category: "Portfolio",
     description: "Platform penggalangan dana dengan integrasi pembayaran aman",
     year: "2020"
   },
@@ -97,7 +121,15 @@ const projects = [
     title: "Website Sekolah", 
     thumbnail: "/images/w12.webp",
     link: "#",
-    category: "Institusi",
+    category: "Portfolio",
+    description: "Website informasi sekolah dengan fitur pendaftaran online dan portal siswa",
+    year: "2020"
+  },
+    { 
+    title: "Website Sekolah", 
+    thumbnail: "/images/w12.webp",
+    link: "#",
+    category: "Portfolio",
     description: "Website informasi sekolah dengan fitur pendaftaran online dan portal siswa",
     year: "2020"
   }
@@ -157,7 +189,7 @@ export default function Portfolio() {
           Karya Terpilih
         </span>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-          Hasil Karya <br className="hidden sm:block" /> 
+          Beberapa Karya <br className="hidden sm:block" /> 
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">
             Terbaik
           </span>
@@ -203,6 +235,8 @@ export default function Portfolio() {
           >
             <a 
               href={project.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
               className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               aria-label={`Lihat proyek ${project.title}`}
             >
@@ -212,7 +246,7 @@ export default function Portfolio() {
                   alt={`Tampilan proyek ${project.title}`}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-103"
                   priority={index < 3}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
